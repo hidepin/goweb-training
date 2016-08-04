@@ -15,6 +15,20 @@ type Employee struct {
 	ManagerID int
 }
 
+type Point struct {
+	X, Y int
+}
+
+type Circle struct {
+	Point
+	Radius int
+}
+
+type Wheel struct {
+	Circle
+	Spokes int
+}
+
 func main() {
 	var dilbert Employee
 	dilbert.Salary -= 5000
@@ -27,4 +41,11 @@ func main() {
 	var employeeOfTheMonth *Employee = &dilbert
 	employeeOfTheMonth.Position += " (proactive team player)"
 	fmt.Printf("%v\n", dilbert)
+
+	var w Wheel
+	w.X = 8
+	w.Y = 8
+	w.Radius = 5
+	w.Spokes = 20
+	fmt.Printf("%#v\n", w)
 }
