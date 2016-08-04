@@ -44,4 +44,8 @@ func main() {
 	for _, name := range names {
 		fmt.Printf("%s\t%d\n", name, ages[name])
 	}
+
+	var nilages map[string]int
+	fmt.Println(nilages == nil)
+	fmt.Println(len(nilages) == 0)
 }
