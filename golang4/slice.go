@@ -37,6 +37,27 @@ func appendInt(x []int, y ...int) []int {
 	return z
 }
 
+func nonempty(strings []string) []string {
+	i := 0
+	for _, s := range strings {
+		if s != "" {
+			strings[i] = s
+			i++
+		}
+	}
+	return strings[:i]
+}
+
+func nonempty2(strings []string) []string {
+	out := strings[:0]
+	for _, s := range strings {
+		if s != "" {
+			out = append(out, s)
+		}
+	}
+	return out
+}
+
 func main() {
 	months := [...]string{
 		1:  "January",
@@ -122,4 +143,14 @@ func main() {
 	fmt.Printf("cap=%d\t%v\n", cap(y), y)
 	y = append(y, y...)
 	fmt.Printf("cap=%d\t%v\n", cap(y), y)
+
+	data := []string{"one", "", "three"}
+	fmt.Printf("%q\n", data)
+	fmt.Printf("%q\n", nonempty(data))
+	fmt.Printf("%q\n", data)
+
+	data = []string{"one", "", "three"}
+	fmt.Printf("%q\n", data)
+	fmt.Printf("%q\n", nonempty2(data))
+	fmt.Printf("%q\n", data)
 }
