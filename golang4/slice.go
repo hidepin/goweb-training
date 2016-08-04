@@ -107,10 +107,9 @@ func main() {
 	}
 	fmt.Printf("%q\n", runes)
 
-	var x, y []int
+	var x []int
 	for i := 0; i < 10; i++ {
-		y = appendInt(x, i)
-		fmt.Printf("%d\tcap=%d\t%v\n", i, cap(y), y)
-		x = y
+		x = appendInt(x, i)
+		fmt.Printf("%d\tcap=%d\t%v\n", i, cap(x), x)
 	}
 }
