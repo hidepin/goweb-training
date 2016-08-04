@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 	ages := map[string]int{
@@ -32,4 +35,13 @@ func main() {
 	fmt.Printf("%s = %d\n", "bob", ages["bob"])
 	ages["bob"]++
 	fmt.Printf("%s = %d\n", "bob", ages["bob"])
+
+	var names []string
+	for name := range ages {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		fmt.Printf("%s\t%d\n", name, ages[name])
+	}
 }
