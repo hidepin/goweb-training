@@ -58,6 +58,16 @@ func nonempty2(strings []string) []string {
 	return out
 }
 
+func remove(slice []int, i int) []int {
+	copy(slice[i:], slice[i+1:])
+	return slice[:len(slice)-1]
+}
+
+func remove2(slice []int, i int) []int {
+	slice[i] = slice[len(slice)-1]
+	return slice[:len(slice)-1]
+}
+
 func main() {
 	months := [...]string{
 		1:  "January",
@@ -153,4 +163,12 @@ func main() {
 	fmt.Printf("%q\n", data)
 	fmt.Printf("%q\n", nonempty2(data))
 	fmt.Printf("%q\n", data)
+
+	z := []int{5, 6, 7, 8, 9}
+	fmt.Println(z)
+	fmt.Println(remove(z, 2))
+
+	z = []int{5, 6, 7, 8, 9}
+	fmt.Println(z)
+	fmt.Println(remove2(z, 2))
 }
