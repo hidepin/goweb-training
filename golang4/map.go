@@ -48,4 +48,8 @@ func main() {
 	var nilages map[string]int
 	fmt.Println(nilages == nil)
 	fmt.Println(len(nilages) == 0)
+
+	age, ok := ages["foo"]
+	fmt.Printf("age = %d, ok = %v\n", age, ok)
+
 }
