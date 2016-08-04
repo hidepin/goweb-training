@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"net/url"
@@ -12,6 +13,17 @@ import (
 )
 
 const IssuesURL = "https://api.github.com/search/issues"
+const templ = `{{.TotalCount}} issues:
+{{range .Items}}------------------------------------------------------------
+Number: {{.Number}}
+User:   {{.User.Login}}
+Title:  {{.Title | printf "%.64s"}}
+Age:    {{.CreatedAt | daysAgo}} days
+{{end}}`
+
+var report = template.Must(template.New("issuelist").
+	Funcs(template.FuncMap{"daysAgo": daysAgo}).
+	Parse(templ))
 
 type IssuesSearchResult struct {
 	TotalCount int `json:"total_count"`
@@ -53,6 +65,10 @@ func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	return &result, nil
 }
 
+func daysAgo(t time.Time) int {
+	return int(time.Since(t).Hours() / 24)
+}
+
 func main() {
 	result, err := SearchIssues(os.Args[1:])
 	if err != nil {
@@ -62,5 +78,9 @@ func main() {
 
 	for _, item := range result.Items {
 		fmt.Printf("#%-5d %9.9s %.55s\n", item.Number, item.User.Login, item.Title)
+	}
+
+	if err := report.Execute(os.Stdout, result); err != nil {
+		log.Fatal(err)
 	}
 }
