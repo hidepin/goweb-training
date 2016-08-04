@@ -112,4 +112,14 @@ func main() {
 		x = appendInt(x, i)
 		fmt.Printf("%d\tcap=%d\t%v\n", i, cap(x), x)
 	}
+
+	var y []int
+	y = append(y, 1)
+	fmt.Printf("cap=%d\t%v\n", cap(y), y)
+	y = append(y, 2, 3)
+	fmt.Printf("cap=%d\t%v\n", cap(y), y)
+	y = append(y, 4, 5, 6)
+	fmt.Printf("cap=%d\t%v\n", cap(y), y)
+	y = append(y, y...)
+	fmt.Printf("cap=%d\t%v\n", cap(y), y)
 }
