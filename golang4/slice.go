@@ -83,4 +83,10 @@ func main() {
 	Q22 := months[4:7]
 	fmt.Println(equal(Q2, summer))
 	fmt.Println(equal(Q2, Q22))
+
+	var runes []rune
+	for _, r := range "Hello, 世界" {
+		runes = append(runes, r)
+	}
+	fmt.Printf("%q\n", runes)
 }
