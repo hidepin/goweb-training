@@ -8,6 +8,18 @@ func reverse(s []int) {
 	}
 }
 
+func equal(x, y []string) bool {
+	if len(x) != len(y) {
+		return false
+	}
+	for i := range x {
+		if x[i] != y[i] {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
 	months := [...]string{
 		1:  "January",
@@ -67,4 +79,8 @@ func main() {
 	fmt.Println(s)
 	reverse(s)
 	fmt.Println(s)
+
+	Q22 := months[4:7]
+	fmt.Println(equal(Q2, summer))
+	fmt.Println(equal(Q2, Q22))
 }
