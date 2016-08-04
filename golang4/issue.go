@@ -25,6 +25,26 @@ var report = template.Must(template.New("issuelist").
 	Funcs(template.FuncMap{"daysAgo": daysAgo}).
 	Parse(templ))
 
+var issueList = template.Must(template.New("issuelist").Parse(`
+<h1>{{.TotalCount}} issues</h1>
+<table>
+<tr style='text-align: left'>
+<th>#</th>
+<th>State</th>
+<th>User</th>
+<th>Title</th>
+</tr>
+{{range .Items}}
+<tr>
+<td><a href='{{.HTMLURL}}'>{{.Number}}</a></td>
+<td>{{.State}}</td>
+<td><a href='{{.User.HTMLURL}}'>{{.User.Login}}</a></td>
+<td><a href='{{.HTMLURL}}'>{{.Title}}</a></td>
+</tr>
+{{end}}
+</table>
+`))
+
 type IssuesSearchResult struct {
 	TotalCount int `json:"total_count"`
 	Items      []*Issue
@@ -74,13 +94,17 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%d isues:\n", result.TotalCount)
+	/*
+		fmt.Printf("%d isues:\n", result.TotalCount)
+		for _, item := range result.Items {
+			fmt.Printf("#%-5d %9.9s %.55s\n", item.Number, item.User.Login, item.Title)
+		}
 
-	for _, item := range result.Items {
-		fmt.Printf("#%-5d %9.9s %.55s\n", item.Number, item.User.Login, item.Title)
-	}
-
-	if err := report.Execute(os.Stdout, result); err != nil {
+		if err := report.Execute(os.Stdout, result); err != nil {
+			log.Fatal(err)
+		}
+	*/
+	if err := issueList.Execute(os.Stdout, result); err != nil {
 		log.Fatal(err)
 	}
 }
