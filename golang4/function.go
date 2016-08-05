@@ -31,6 +31,16 @@ func visit(links []string, n *html.Node) []string {
 	return links
 }
 
+func outline(stack []string, n *html.Node) {
+	if n.Type == html.ElementNode {
+		stack = append(stack, n.Data)
+		fmt.Println(stack)
+	}
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		outline(stack, c)
+	}
+}
+
 func main() {
 	fmt.Println(hypot(3, 4))
 
@@ -47,4 +57,6 @@ func main() {
 	for _, link := range visit(nil, doc) {
 		fmt.Println(link)
 	}
+
+	outline(nil, doc)
 }
