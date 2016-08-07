@@ -8,7 +8,21 @@ import (
 
 func add1(r rune) rune { return r + 1 }
 
+func squares() func() int {
+	var x int
+	return func() int {
+		x++
+		return x * x
+	}
+}
+
 func main() {
+	f := squares()
+	fmt.Println(f())
+	fmt.Println(f())
+	fmt.Println(f())
+	fmt.Println(f())
+
 	fmt.Println(strings.Map(add1, "HAL-9000"))
 	fmt.Println(strings.Map(add1, "VMS"))
 	fmt.Println(strings.Map(add1, "Admix"))
