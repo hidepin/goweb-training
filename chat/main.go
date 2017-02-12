@@ -4,9 +4,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"path/filepath"
+	"path"
 	"sync"
 )
+
+//go:generate go-bindata -o templates.go ./templates
 
 type templateHandler struct {
 	once     sync.Once
@@ -16,8 +18,12 @@ type templateHandler struct {
 
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
-		t.templ =
-			template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
+		if b, err := Asset(path.Join("templates", t.filename)); err != nil {
+			log.Fatal(err)
+		} else {
+			t.templ, _ =
+				template.New("complex").Parse(string(b))
+		}
 	})
 	if err := t.templ.Execute(w, nil); err != nil {
 		log.Fatal("ServeHTTP:", err)
